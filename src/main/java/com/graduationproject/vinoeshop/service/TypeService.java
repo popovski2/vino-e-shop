@@ -1,12 +1,11 @@
 package com.graduationproject.vinoeshop.service;
 
-import com.graduationproject.vinoeshop.model.Category;
 import com.graduationproject.vinoeshop.model.Type;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CategoryService {
+public interface TypeService {
 
 
     /**
@@ -18,14 +17,15 @@ public interface CategoryService {
      **/
 
 
-    /** LIST ALL CATEGORIES **/
-    List<Category> listAllCategories();
+    /** LIST ALL TYPES **/
+    List<Type> listAllTypes();
 
-    /** FIND CATEGORY BY ID **/
-    Optional<Category> findById(Long categoryId);
+    /** FIND TYPE BY ID **/
+    Optional<Type> findById(Long typeId);
 
-    /** FIND CATEGORY BY CATEGORY NAME**/
-    Category findByName(String categoryName);
+    /** FIND ALL TYPES THAT BELONG TO ONE CATEGORY**/
+    List<Type> findAllTypesWithCategoryId(Long categoryId);
+
 
 
     /**
@@ -35,7 +35,7 @@ public interface CategoryService {
      *                          *
      *                          *
      **/
-    Category create(String name);
+    Type create(String name, String description, Long categoryId);
 
 
     /**
@@ -45,7 +45,7 @@ public interface CategoryService {
      *                          *
      *                          *
      **/
-    Category update(Long categoryId, String name);
+    Type update(Long typeId, String name, String description, Long categoryId);
 
 
     /**
@@ -56,8 +56,11 @@ public interface CategoryService {
      *                          *
      **/
 
-    /** DELETE CATEGORY WITH CATEGORY ID **/
-    Category delete(Long categoryId);
+    /** DELETE TYPE WITH TYPE ID **/
+    Type delete(Long typeId);
+
+    /** DELETE ALL TYPES THAT BELONG TO CATEGORY **/
+    void deleteAllTypesOfCategory(Long categoryId);
 
 
 }

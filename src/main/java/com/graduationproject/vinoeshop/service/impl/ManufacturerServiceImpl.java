@@ -13,8 +13,8 @@ import java.util.Optional;
 @Service
 public class ManufacturerServiceImpl implements ManufacturerService {
 
-    private WineService wineService;
-    private ManufacturerRepository manufacturerRepository;
+    private final WineService wineService;
+    private final ManufacturerRepository manufacturerRepository;
 
     public ManufacturerServiceImpl(ManufacturerRepository manufacturerRepository, WineService wineService) {
         this.manufacturerRepository = manufacturerRepository;

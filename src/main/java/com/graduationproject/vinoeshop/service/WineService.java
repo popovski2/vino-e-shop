@@ -26,6 +26,10 @@ public interface WineService {
     /** LIST WINES BY CATEGORY NAME **/
     List<Wine> listWinesByCategoryName(String categoryName);
 
+    /** LIST WINES BY TYPE ID **/
+    List<Wine> listWinesByTypeId(Long typeId);
+
+
 
 
     /**
@@ -45,7 +49,7 @@ public interface WineService {
      *                          *
      *                          *
      **/
-    Wine update(Long id, String name, Double price, Integer quantity, String imageUrl, Long categoryId, Long manufacturerId, Long typeId);
+    Wine update(Long wineId, String name, Double price, Integer quantity, String imageUrl, Long categoryId, Long manufacturerId, Long typeId);
 
 
     /**
@@ -60,7 +64,7 @@ public interface WineService {
     Wine delete(Long id);
 
     /** DELETE ALL WINES WITH TYPE ID **/
-    void deleteByTypeId(Long typeId);
+    void deleteWinesByTypeId(Long typeId);
 
     /** DELETE ALL WINES FROM MANUFACTURER WITH MANUFACTURER ID **/
     void deleteWinesByManufacturer(Long manufacturerId);

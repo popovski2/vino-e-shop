@@ -1,10 +1,11 @@
 package com.graduationproject.vinoeshop.service.impl;
 
 import com.graduationproject.vinoeshop.model.Category;
-import com.graduationproject.vinoeshop.model.Type;
 import com.graduationproject.vinoeshop.model.exceptions.InvalidCategoryIdException;
 import com.graduationproject.vinoeshop.repository.CategoryRepository;
 import com.graduationproject.vinoeshop.service.CategoryService;
+import com.graduationproject.vinoeshop.service.TypeService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +14,11 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryRepository categoryRepository;
-
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    private final CategoryRepository categoryRepository;
+    private final TypeService typeService;
+    public CategoryServiceImpl(CategoryRepository categoryRepository, TypeService typeService) {
         this.categoryRepository = categoryRepository;
+        this.typeService = typeService;
     }
 
 
@@ -36,6 +38,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Optional<Category> findById(Long categoryId) {
         return Optional.ofNullable(this.categoryRepository.findById(categoryId).orElseThrow(() -> new InvalidCategoryIdException(categoryId)));
+    }
+
+    @Override
+    public Category findByName(String categoryName) {
+        return this.categoryRepository.findCategoryByName(categoryName);
     }
 
 
@@ -69,8 +76,11 @@ public class CategoryServiceImpl implements CategoryService {
      * **/
 
     @Override
-    public Category update(Long categoryId, String name, List<Type> types) {
-        return null;
+    public Category update(Long categoryId, String name) {
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new InvalidCategoryIdException(categoryId));
+        category.setName(name);
+        this.categoryRepository.save(category);
+        return category;
     }
 
     /**
@@ -82,6 +92,13 @@ public class CategoryServiceImpl implements CategoryService {
      * **/
     @Override
     public Category delete(Long categoryId) {
-        return null;
+
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new InvalidCategoryIdException(categoryId));
+
+        // when deleting Category we need to delete all the associated types to that category
+        this.typeService.deleteAllTypesOfCategory(categoryId);
+        // then we are deleting the category
+        this.categoryRepository.delete(category);
+        return category;
     }
 }

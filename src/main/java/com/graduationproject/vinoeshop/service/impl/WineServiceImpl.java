@@ -4,10 +4,15 @@ import com.graduationproject.vinoeshop.model.Category;
 import com.graduationproject.vinoeshop.model.Manufacturer;
 import com.graduationproject.vinoeshop.model.Type;
 import com.graduationproject.vinoeshop.model.Wine;
+import com.graduationproject.vinoeshop.model.exceptions.InvalidCategoryIdException;
 import com.graduationproject.vinoeshop.model.exceptions.InvalidManufacturerIdException;
+import com.graduationproject.vinoeshop.model.exceptions.InvalidTypeIdException;
 import com.graduationproject.vinoeshop.model.exceptions.InvalidWineIdException;
+import com.graduationproject.vinoeshop.repository.CategoryRepository;
 import com.graduationproject.vinoeshop.repository.ManufacturerRepository;
+import com.graduationproject.vinoeshop.repository.TypeRepository;
 import com.graduationproject.vinoeshop.repository.WineRepository;
+import com.graduationproject.vinoeshop.service.CategoryService;
 import com.graduationproject.vinoeshop.service.WineService;
 import org.springframework.stereotype.Service;
 
@@ -18,20 +23,29 @@ import java.util.stream.Collectors;
 @Service
 public class WineServiceImpl implements WineService {
 
-    private WineRepository wineRepository;
-    private ManufacturerRepository manufacturerRepository;
+    private final WineRepository wineRepository;
+    private final ManufacturerRepository manufacturerRepository;
+    private final TypeRepository typeRepository;
+    private final CategoryRepository categoryRepository;
+
+    private final CategoryService categoryService;
+
 
     /**     DEPENDENCY INJECTION FOR THE REPOSITORIES      **/
-    public WineServiceImpl(WineRepository wineRepository, ManufacturerRepository manufacturerRepository) {
+    public WineServiceImpl(WineRepository wineRepository, ManufacturerRepository manufacturerRepository, TypeRepository typeRepository, CategoryRepository categoryRepository, CategoryService categoryService) {
             this.wineRepository = wineRepository;
             this.manufacturerRepository = manufacturerRepository;
+        this.typeRepository = typeRepository;
+        this.categoryRepository = categoryRepository;
+
+        this.categoryService = categoryService;
     }
 
     /**
      *                      *
      *          GET         *
      *                      *
-     *    **/
+     *                      **/
     @Override
     public List<Wine> listAllWines() {
         return this.wineRepository.findAll();
@@ -47,19 +61,28 @@ public class WineServiceImpl implements WineService {
         return this.wineRepository.findAllByCategoryName(name);
     }
 
+    @Override
+    public List<Wine> listWinesByTypeId(Long typeId) {
+        return this.wineRepository.findAllByType_Id(typeId);
+    }
+
     /**
      *                      *
      *          POST        *
      *                      *
-     *    **/
+     *                      **/
 
     @Override
     public Wine create(String name, Double price, Integer quantity, String imageUrl, Long categoryId, Long manufacturerId, Long typeId) {
-        Category category;
-        Manufacturer manufacturer;
-        Type type;
-       // create new wine
-      //  Wine wine = new Wine(name,price,quantity,imageUrl)
+
+        Type type = this.typeRepository.findById(typeId).orElseThrow(() -> new InvalidTypeIdException(typeId));
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new InvalidCategoryIdException(categoryId));
+        Manufacturer manufacturer = this.manufacturerRepository.findById(manufacturerId).orElseThrow(() -> new InvalidManufacturerIdException(manufacturerId));
+
+        // create new wine
+       Wine wine = new Wine(name,price,quantity,imageUrl,category,manufacturer,type);
+       this.wineRepository.save(wine);
+       return wine;
 
     }
 
@@ -68,10 +91,26 @@ public class WineServiceImpl implements WineService {
      *                      *
      *          PUT         *
      *                      *
-     *    **/
+     *                      **/
     @Override
-    public Wine update(Long id, String name, Double price, Integer quantity, String imageUrl, Long categoryId, Long manufacturerId, Long typeId) {
-        return null;
+    public Wine update(Long wineId, String name, Double price, Integer quantity, String imageUrl, Long categoryId, Long manufacturerId, Long typeId) {
+
+        Wine wine = this.wineRepository.findById(wineId).orElseThrow(() -> new InvalidWineIdException(wineId));
+
+        Type type = this.typeRepository.findById(typeId).orElseThrow(() -> new InvalidTypeIdException(typeId));
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new InvalidCategoryIdException(categoryId));
+        Manufacturer manufacturer = this.manufacturerRepository.findById(manufacturerId).orElseThrow(() -> new InvalidManufacturerIdException(manufacturerId));
+
+        // update the wine
+        wine.setName(name);
+        wine.setPrice(price);
+        wine.setQuantity(quantity);
+        wine.setImageUrl(imageUrl);
+        wine.setCategory(category);
+        wine.setManufacturer(manufacturer);
+        wine.setType(type);
+        this.wineRepository.save(wine);
+        return wine;
     }
 
 
@@ -79,7 +118,7 @@ public class WineServiceImpl implements WineService {
      *                      *
      *        DELETE        *
      *                      *
-     *    **/
+     *                      **/
     @Override
     public Wine delete(Long wineId) {
         Wine wineForDeletion = this.wineRepository.findById(wineId).orElseThrow(() -> new InvalidWineIdException(wineId));
@@ -88,14 +127,20 @@ public class WineServiceImpl implements WineService {
     }
 
     @Override
-    public void deleteByTypeId(Long typeId) {
+    public void deleteWinesByTypeId(Long typeId) {
 
+        // find all the wines with typeId
+        List<Wine> wines = this.wineRepository.findAll();
+        wines = wines.stream()
+                .filter(w -> w.getType().getId().equals(typeId)).
+                        collect(Collectors.toList());
+        // delete them
+        this.wineRepository.deleteAll(wines);
     }
 
     @Override
     public void deleteWinesByManufacturer(Long manufacturerId) {
 
-        Manufacturer manufacturer = this.manufacturerRepository.findById(manufacturerId).orElseThrow(() -> new InvalidManufacturerIdException(manufacturerId));
 
         //  firstly, get all wines
         List<Wine> wines = this.wineRepository.findAll();
