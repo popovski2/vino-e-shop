@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Wine {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -40,6 +40,9 @@ public class Wine {
         this.category = category;
         this.manufacturer = manufacturer;
         this.type = type;
+    }
+
+    public Wine() {
     }
 
     /** GETTERS **/

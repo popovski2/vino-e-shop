@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Type {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -25,6 +25,9 @@ public class Type {
         this.name = name;
         this.description = description;
         this.category = category;
+    }
+
+    public Type() {
     }
 
     /** GETTERS **/

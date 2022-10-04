@@ -75,9 +75,9 @@ public class WineServiceImpl implements WineService {
     @Override
     public Wine create(String name, Double price, Integer quantity, String imageUrl, Long categoryId, Long manufacturerId, Long typeId) {
 
-        Type type = this.typeRepository.findById(typeId).orElseThrow(() -> new InvalidTypeIdException(typeId));
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new InvalidCategoryIdException(categoryId));
         Manufacturer manufacturer = this.manufacturerRepository.findById(manufacturerId).orElseThrow(() -> new InvalidManufacturerIdException(manufacturerId));
+        Type type = this.typeRepository.findById(typeId).orElseThrow(() -> new InvalidTypeIdException(typeId));
 
         // create new wine
        Wine wine = new Wine(name,price,quantity,imageUrl,category,manufacturer,type);

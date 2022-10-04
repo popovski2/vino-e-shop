@@ -9,6 +9,7 @@ import com.graduationproject.vinoeshop.repository.CategoryRepository;
 import com.graduationproject.vinoeshop.repository.TypeRepository;
 import com.graduationproject.vinoeshop.service.TypeService;
 import com.graduationproject.vinoeshop.service.WineService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,8 @@ public class TypeServiceImpl implements TypeService {
     private final CategoryRepository categoryRepository;
     private final WineService wineService;
 
-    public TypeServiceImpl(TypeRepository typeRepository, CategoryRepository categoryRepository, WineService wineService) {
+    // I use @Lazy because the application will crash since we use circular dependencies CategoryServiceImpl->TypeServiceImpl->WineServiceImpl
+    public TypeServiceImpl(TypeRepository typeRepository, CategoryRepository categoryRepository, @Lazy WineService wineService) {
         this.typeRepository = typeRepository;
         this.categoryRepository = categoryRepository;
         this.wineService = wineService;

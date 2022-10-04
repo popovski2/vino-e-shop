@@ -7,7 +7,7 @@ import java.util.List;
 public class Manufacturer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -23,6 +23,9 @@ public class Manufacturer {
     public Manufacturer(String name, String address) {
         this.name = name;
         this.address = address;
+    }
+
+    public Manufacturer() {
     }
 
     /** GETTERS **/
