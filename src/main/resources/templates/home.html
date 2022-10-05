@@ -1,10 +1,421 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: navigation_bar">
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
 
+
+<div th:replace="fragments/header :: header">
+
+</div>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    .hero {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero::before {
+        content: "";
+        background-image: url('https://images.pexels.com/photos/2537608/pexels-photo-2537608.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+        background-size: cover;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        opacity: 0.4;
+    }
+</style>
+
+<section class="pt-5 pb-5 mt-0 align-items-center d-flex bg-dark hero">
+    <div class="container-fluid">
+        <div class="row  justify-content-center align-items-center d-flex text-center h-100">
+            <div class="col-12 col-md-8  h-50 ">
+                <h1 class="display-2  text-light mb-2 mt-5"><strong><i>Best of Wines</i></strong> </h1>
+                <p class="lead text-light mb-5"><strong><i>A treasure of fine wines and spirits</i></strong></p>
+                <p><a href="/wines" class="btn bg-danger shadow-lg btn-round text-light btn-lg btn-rised">Explore more</a></p>
+            </div>
+
+        </div>
+    </div>
+</section>
+<br>
+<br>
+<div class="container-fluid">
+    <div class="container text-center">
+        <h1>Best of Wines</h1>
+        <p class="w-lg-50 mx-auto"><i>Our dedicated and experienced wine professionals have in-depth knowledge <br> of the wine industry and global market, with a clear focus on fine and rare wines.</i></p>
+    </div>
+    <div class="container">
+        <h2 class="h5 mb-5 text-center">Offers of the week</h2>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card text-center mb-3">
+                    <div class="py-5 px-4">
+                        <img height="200px" width="100px" src="https://data.callmewine.com/imgprodotto/prosecco-extra-dry-dirupo-andreola_17356_list.jpg" alt="" class="img-fluid mb-4" />
+                        <h3 class="fs-6 text-truncate"><a href="/wines" class="stretched-link text-reset">Los Posadas 2016</a></h3>
+                        <span class="text-success">$799.00</span> <del class="text-muted">$650.83</del>
+                    </div>
+                    <div class="bg-danger text-white small position-absolute end-0 top-0 px-2 py-2 lh-1 text-center">
+                        <span class="d-block">10%</span>
+                        <span class="d-block">OFF</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card text-center position-relative mb-3">
+                    <div class="py-5 px-4">
+                        <img height="200px" width="100px" src="https://data.callmewine.com/imgprodotto/lambrusco-rimosso-cantina-della-volta-2020_35161_list.jpg" alt="" class="img-fluid mb-4" />
+                        <h3 class="fs-6 text-truncate"><a href="/wines" class="stretched-link text-reset">Grenache Profuga 2018 (Magnum)</a></h3>
+                        <span class="text-success">$250.00</span> <del class="text-muted">$250</del>
+                    </div>
+                    <div class="bg-danger text-white small position-absolute end-0 top-0 px-2 py-2 lh-1 text-center">
+                        <span class="d-block">25%</span>
+                        <span class="d-block">OFF</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card text-center mb-3">
+                    <div class="py-5 px-4">
+                        <img height="200px" width="100px"  src="https://data.callmewine.com/imgprodotto/grillo-mandrarossa-2021_41119_list.jpg" alt="" class="img-fluid mb-4" />
+                        <h3 class="fs-6 text-truncate"><a href="/wines" class="stretched-link text-reset">Anjou Les Rouères 2018</a></h3>
+                        <span class="text-success">$29.00</span> <del class="text-muted">$14.50</del>
+                    </div>
+                    <div class="bg-danger text-white small position-absolute end-0 top-0 px-2 py-2 lh-1 text-center">
+                        <span class="d-block">50%</span>
+                        <span class="d-block">OFF</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card text-center mb-3">
+                    <div class="py-5 px-4">
+                        <img height="200px" width="100px" src="https://data.callmewine.com/imgprodotto/falo-d-ottobre-i-carpini-2018_41591_list.jpg" alt="" class="img-fluid mb-4" />
+                        <h3 class="fs-6 text-truncate"><a href="/wines" class="stretched-link text-reset">Les Poyeux Saumur Champigny 2015</a></h3>
+                        <span class="text-success">$110.00</span> <del class="text-muted">$85.23</del>
+                    </div>
+                    <div class="bg-danger text-white small position-absolute end-0 top-0 px-2 py-2 lh-1 text-center">
+                        <span class="d-block">25%</span>
+                        <span class="d-block">OFF</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+<!--<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">WEB PROGRAMMING SHOP</h1>
+    </div>
+</section>-->
+
+
+
+<!-- Footer -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<footer class="footer_area section_padding_130_0">
+    <div class="container">
+        <div class="row">
+            <!-- Single Widget-->
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-footer-widget section_padding_0_130">
+                    <!-- Footer Logo-->
+                    <div class="footer-logo mb-3"></div>
+                    <p>A glass of wine is always a good idea :)</p>
+                    <!-- Copywrite Text-->
+                    <div class="copywrite-text mb-5">
+                        <p class="mb-0">Made with <i class="lni-heart mr-1"></i>by<a class="ml-1" href="https://wrapbootstrap.com/user/DesigningWorld">Designing World</a></p>
+                    </div>
+                    <!-- Footer Social Area-->
+                    <div class="footer_social_area"><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook"><i class="fa fa-facebook"></i></a><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pinterest"><i class="fa fa-pinterest"></i></a><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Skype"><i class="fa fa-skype"></i></a><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></div>
+                </div>
+            </div>
+            <!-- Single Widget-->
+            <div class="col-12 col-sm-6 col-lg">
+                <div class="single-footer-widget section_padding_0_130">
+                    <!-- Widget Title-->
+                    <h5 class="widget-title">About</h5>
+                    <!-- Footer Menu-->
+                    <div class="footer_menu">
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Corporate Sale</a></li>
+                            <li><a href="#">Terms &amp; Policy</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Single Widget-->
+            <div class="col-12 col-sm-6 col-lg">
+                <div class="single-footer-widget section_padding_0_130">
+                    <!-- Widget Title-->
+                    <h5 class="widget-title">Support</h5>
+                    <!-- Footer Menu-->
+                    <div class="footer_menu">
+                        <ul>
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Term &amp; Conditions</a></li>
+                            <li><a href="#">Help &amp; Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Single Widget-->
+            <div class="col-12 col-sm-6 col-lg">
+                <div class="single-footer-widget section_padding_0_130">
+                    <!-- Widget Title-->
+                    <h5 class="widget-title">Contact</h5>
+                    <!-- Footer Menu-->
+                    <div class="footer_menu">
+                        <ul>
+                            <li><a href="#">Call Centre</a></li>
+                            <li><a href="#">Email Us</a></li>
+                            <li><a href="#">Term &amp; Conditions</a></li>
+                            <li><a href="#">Help Center</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    body{margin-top:20px;}
+    .footer_area {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        webkit-box-shadow: 0 8px 48px 8px rgba(47, 91, 234, 0.175);
+        box-shadow: 0 8px 48px 8px rgba(47, 91, 234, 0.175);
+        padding:60px;
+    }
+    .footer_area .row {
+        margin-left: -25px;
+        margin-right: -25px;
+    }
+    .footer_area .row .col,
+    .footer_area .row .col-1,
+    .footer_area .row .col-10,
+    .footer_area .row .col-11,
+    .footer_area .row .col-12,
+    .footer_area .row .col-2,
+    .footer_area .row .col-3,
+    .footer_area .row .col-4,
+    .footer_area .row .col-5,
+    .footer_area .row .col-6,
+    .footer_area .row .col-7,
+    .footer_area .row .col-8,
+    .footer_area .row .col-9,
+    .footer_area .row .col-auto,
+    .footer_area .row .col-lg,
+    .footer_area .row .col-lg-1,
+    .footer_area .row .col-lg-10,
+    .footer_area .row .col-lg-11,
+    .footer_area .row .col-lg-12,
+    .footer_area .row .col-lg-2,
+    .footer_area .row .col-lg-3,
+    .footer_area .row .col-lg-4,
+    .footer_area .row .col-lg-5,
+    .footer_area .row .col-lg-6,
+    .footer_area .row .col-lg-7,
+    .footer_area .row .col-lg-8,
+    .footer_area .row .col-lg-9,
+    .footer_area .row .col-lg-auto,
+    .footer_area .row .col-md,
+    .footer_area .row .col-md-1,
+    .footer_area .row .col-md-10,
+    .footer_area .row .col-md-11,
+    .footer_area .row .col-md-12,
+    .footer_area .row .col-md-2,
+    .footer_area .row .col-md-3,
+    .footer_area .row .col-md-4,
+    .footer_area .row .col-md-5,
+    .footer_area .row .col-md-6,
+    .footer_area .row .col-md-7,
+    .footer_area .row .col-md-8,
+    .footer_area .row .col-md-9,
+    .footer_area .row .col-md-auto,
+    .footer_area .row .col-sm,
+    .footer_area .row .col-sm-1,
+    .footer_area .row .col-sm-10,
+    .footer_area .row .col-sm-11,
+    .footer_area .row .col-sm-12,
+    .footer_area .row .col-sm-2,
+    .footer_area .row .col-sm-3,
+    .footer_area .row .col-sm-4,
+    .footer_area .row .col-sm-5,
+    .footer_area .row .col-sm-6,
+    .footer_area .row .col-sm-7,
+    .footer_area .row .col-sm-8,
+    .footer_area .row .col-sm-9,
+    .footer_area .row .col-sm-auto,
+    .footer_area .row .col-xl,
+    .footer_area .row .col-xl-1,
+    .footer_area .row .col-xl-10,
+    .footer_area .row .col-xl-11,
+    .footer_area .row .col-xl-12,
+    .footer_area .row .col-xl-2,
+    .footer_area .row .col-xl-3,
+    .footer_area .row .col-xl-4,
+    .footer_area .row .col-xl-5,
+    .footer_area .row .col-xl-6,
+    .footer_area .row .col-xl-7,
+    .footer_area .row .col-xl-8,
+    .footer_area .row .col-xl-9,
+    .footer_area .row .col-xl-auto {
+        padding-right: 25px;
+        padding-left: 25px;
+    }
+
+    .single-footer-widget {
+        position: relative;
+        z-index: 1;
+    }
+    .single-footer-widget .copywrite-text a {
+        color: #747794;
+        font-size: 1rem;
+    }
+    .single-footer-widget .copywrite-text a:hover,
+    .single-footer-widget .copywrite-text a:focus {
+        color: #3f43fd;
+    }
+    .single-footer-widget .widget-title {
+        margin-bottom: 1.5rem;
+    }
+    .single-footer-widget .footer_menu li a {
+        color: #747794;
+        margin-bottom: 1rem;
+        display: block;
+        font-size: 1rem;
+    }
+    .single-footer-widget .footer_menu li a:hover,
+    .single-footer-widget .footer_menu li a:focus {
+        color: #3f43fd;
+    }
+    .single-footer-widget .footer_menu li:last-child a {
+        margin-bottom: 0;
+    }
+
+    .footer_social_area {
+        position: relative;
+        z-index: 1;
+    }
+    .footer_social_area a {
+        border-radius: 50%;
+        height: 40px;
+        text-align: center;
+        width: 40px;
+        display: inline-block;
+        background-color: #f5f5ff;
+        line-height: 40px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        margin-right: 10px;
+    }
+    .footer_social_area a i {
+        line-height: 36px;
+    }
+    .footer_social_area a:hover,
+    .footer_social_area a:focus {
+        color: #ffffff;
+    }
+
+    @-webkit-keyframes bi-cycle {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    @keyframes bi-cycle {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+    ol li, ul li {
+        list-style: none;
+    }
+
+    ol, ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        margin-top: 20px;
+    }
+    .text-center {
+        text-align: center !important;
+    }
+    .mb-5 {
+        margin-bottom: 3rem !important;
+    }
+    .mx-auto {
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+    .text-reset {
+        --bs-text-opacity: 1;
+        color: inherit !important;
+    }
+    a {
+        color: #5465ff;
+        text-decoration: none;
+    }
+    body {
+        background: #eee;
+    }
+    .card {
+        box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+    }
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0, 0, 0, 0.125);
+        border-radius: 1rem;
+    }
+    .card-body {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.5rem 1.5rem;
+    }
+</style>
+
 </body>
 </html>
+
+
