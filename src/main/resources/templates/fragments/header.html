@@ -19,7 +19,7 @@
 
 <!-- NAV -->
 <div th:fragment="header" style="margin-top: -20px;">
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-danger"  >
     <div class="container">
         <a class="navbar-brand" href="/home"><i>Best of Wines</i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -54,14 +54,18 @@
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
-                <div class="input-group input-group-sm">
+                <!--<div class="input-group input-group-sm">
                     <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
                            placeholder="Search...">
                     <div class="input-group-append">
                         <button type="button" class="btn btn-secondary btn-number">
                             <i class="fa fa-search"></i>
                         </button>
-                    </div>
+                    </div>-->
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                </form>
                 </div>
                 <th:block sec:authorize="hasAnyRole('ADMIN','CUSTOMER')">
                     <a class="btn btn-success btn-sm ml-3" href="/shopping-cart">
