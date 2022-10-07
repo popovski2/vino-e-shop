@@ -140,8 +140,6 @@ public class WineServiceImpl implements WineService {
 
     @Override
     public void deleteWinesByManufacturer(Long manufacturerId) {
-
-
         //  firstly, get all wines
         List<Wine> wines = this.wineRepository.findAll();
         //then filter the wines made by this manufacturer

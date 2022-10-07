@@ -123,6 +123,11 @@ public class TypeServiceImpl implements TypeService {
         types = types.stream()
                 .filter(t -> t.getCategory().getId().equals(categoryId)).
                         collect(Collectors.toList());
+
+
+        // check if there are any wines associated with these types
+        types.forEach(t -> this.wineService.deleteWinesByTypeId(t.getId()));
+
         this.typeRepository.deleteAll(types);
     }
 }
