@@ -66,6 +66,11 @@ public class WineServiceImpl implements WineService {
         return this.wineRepository.findAllByType_Id(typeId);
     }
 
+    @Override
+    public List<Wine> listWinesByManufacturer(Long manufacturerId) {
+        return this.wineRepository.findAllByManufacturerId(manufacturerId);
+    }
+
     /**
      *                      *
      *          POST        *

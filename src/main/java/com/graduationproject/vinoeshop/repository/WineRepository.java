@@ -14,6 +14,8 @@ public interface WineRepository extends JpaRepository<Wine, Long> {
 
     List<Wine> findAllByType_Id(Long typeId);
 
+    List<Wine> findAllByManufacturerId(Long manufacturerId);
+
 
 
 

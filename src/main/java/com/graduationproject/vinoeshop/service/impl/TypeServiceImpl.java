@@ -108,7 +108,7 @@ public class TypeServiceImpl implements TypeService {
         Type typeForDeletion = this.typeRepository.findById(typeId).orElseThrow(() -> new InvalidTypeIdException(typeId));
 
         //we need to find all the wines of type with typeId and delete  them
-        this.wineService.deleteWinesByManufacturer(typeId);
+        this.wineService.deleteWinesByTypeId(typeId);
 
         // we delete the type
         this.typeRepository.delete(typeForDeletion);

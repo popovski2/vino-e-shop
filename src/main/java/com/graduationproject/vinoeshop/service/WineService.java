@@ -29,6 +29,9 @@ public interface WineService {
     /** LIST WINES BY TYPE ID **/
     List<Wine> listWinesByTypeId(Long typeId);
 
+    /** LIST WINES BY MANUFACTURER ID**/
+    List<Wine> listWinesByManufacturer(Long manufacturerId);
+
 
 
 
