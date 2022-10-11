@@ -2,17 +2,14 @@ package com.graduationproject.vinoeshop.config;
 
 import com.graduationproject.vinoeshop.model.Category;
 import com.graduationproject.vinoeshop.model.Manufacturer;
-import com.graduationproject.vinoeshop.model.Type;
-import com.graduationproject.vinoeshop.service.CategoryService;
-import com.graduationproject.vinoeshop.service.ManufacturerService;
-import com.graduationproject.vinoeshop.service.TypeService;
-import com.graduationproject.vinoeshop.service.WineService;
+import com.graduationproject.vinoeshop.model.User;
+import com.graduationproject.vinoeshop.model.enumerations.Role;
+import com.graduationproject.vinoeshop.service.*;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class DataInitializer {
@@ -25,12 +22,14 @@ public class DataInitializer {
     private final WineService wineService;
     private final ManufacturerService manufacturerService;
     private final TypeService typeService;
+    private final UserService userService;
 
-    public DataInitializer(CategoryService categoryService, WineService wineService, ManufacturerService manufacturerService, TypeService typeService) {
+    public DataInitializer(CategoryService categoryService, WineService wineService, ManufacturerService manufacturerService, TypeService typeService, UserService userService) {
         this.categoryService = categoryService;
         this.wineService = wineService;
         this.manufacturerService = manufacturerService;
         this.typeService = typeService;
+        this.userService = userService;
     }
 
 
@@ -82,6 +81,12 @@ public class DataInitializer {
                     i % 5L + 1,
                     i % 5L + 1);
         }
+
+
+        userService.saveUser(new User("popovski2","1234","petar","popovski", Role.ROLE_CUSTOMER));
+        userService.saveUser(new User("trajko@gmail.com","1234","trajko","trajkovski",Role.ROLE_ADMIN));
+        userService.saveUser(new User("angela.madjar","1234","angela","madjar",Role.ROLE_CUSTOMER));
+
 
 
 

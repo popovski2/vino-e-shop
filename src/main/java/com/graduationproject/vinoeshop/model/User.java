@@ -1,13 +1,18 @@
 package com.graduationproject.vinoeshop.model;
 
 import com.graduationproject.vinoeshop.model.enumerations.Role;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
 @Table( name = "shop_users")
-public class User {
+public class User implements Serializable, UserDetails {
 
 
     @Id
@@ -36,6 +41,13 @@ public class User {
 
     /** CONSTRUCTORS **/
 
+    public User(String email, String name, String surname, String password, Role role) {
+        this.name = name;
+        this.surname = surname;
+        this.username = email;
+        this.password = password;
+        this.role = role;
+    }
 
     /** GETTERS **/
     public Long getId() {
@@ -52,6 +64,11 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(role);
     }
 
     public String getPassword() {
