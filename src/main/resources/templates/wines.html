@@ -82,7 +82,7 @@
                                 </form>
                             </th:block>
 
-                            <th:block sec:authorize="hasAnyRole('ADMIN','CUSTOMER')">
+                            <th:block sec:authorize="hasAnyRole('CUSTOMER','MANUFACTURER')">
                                 <form style="display: inline-block;" th:action="@{'/shopping-cart/add-wine/{id}' (id=${wine.getId()})}" th:method="POST">
                                     <button type="submit" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-shopping-cart"></i></button>
                                 </form>

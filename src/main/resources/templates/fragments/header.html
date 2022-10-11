@@ -67,7 +67,7 @@
                     <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
                 </form>
                 </div>
-                <th:block sec:authorize="hasAnyRole('ADMIN','CUSTOMER')">
+                <th:block sec:authorize="hasAnyRole('CUSTOMER','MANUFACTURER')">
                     <a class="btn btn-success btn-sm ml-3" href="/shopping-cart">
                         <i class="fa fa-shopping-cart"></i>  Cart
                     </a>

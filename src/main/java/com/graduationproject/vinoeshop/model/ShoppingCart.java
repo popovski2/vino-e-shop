@@ -34,7 +34,18 @@ public class ShoppingCart {
     private Date date;
 
     /** CONSTRUCTORS **/
+
+    public ShoppingCart(LocalDateTime dateCreated, User user, ShoppingCartStatus status) {
+        this.id = (long) (Math.random()*1000);
+        this.dateCreated = dateCreated;
+        this.user = user;
+        this.wines = new ArrayList<>();
+        this.status = status;
+        this.totalPrice = 0.00;
+    }
+
     public ShoppingCart(User user) {
+        this.dateCreated = LocalDateTime.now();
         this.user = user;
         this.wines = new ArrayList<>();
         this.status = ShoppingCartStatus.CREATED;

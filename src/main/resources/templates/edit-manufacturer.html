@@ -84,19 +84,13 @@
                         <img th:src="${wine.getImageUrl()}" alt="Product" class="img-fluid">
 
                         <div class="hover">
-                            <th:block sec:authorize="hasRole('ADMIN')">
+                            <th:block sec:authorize="hasRole('MANUFACTURER','ADMIN')">
                                 <a style="display: inline-block;" th:href="@{'/wines/edit-form/{id}' (id=${wine.getId()})}" class="btn btn-secondary btn-sm waves-effect"><i class="zmdi zmdi-edit"></i></a>
                             </th:block>
 
-                            <th:block sec:authorize="hasRole('ADMIN')">
+                            <th:block sec:authorize="hasRole('MANUFACTURER','ADMIN')">
                                 <form style="display: inline-block;" th:action="@{'/wines/delete/{id}' (id=${wine.getId()})}" th:method="DELETE">
                                     <button type="submit" onclick="return confirm('Are you sure you want to delete this item?')" class="btn btn-danger btn-sm waves-effect"><i class="zmdi zmdi-delete"></i></button>
-                                </form>
-                            </th:block>
-
-                            <th:block sec:authorize="hasAnyRole('ADMIN','CUSTOMER')">
-                                <form style="display: inline-block;" th:action="@{'/shopping-cart/add-wine/{id}' (id=${wine.getId()})}" th:method="POST">
-                                    <button type="submit" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-shopping-cart"></i></button>
                                 </form>
                             </th:block>
 
