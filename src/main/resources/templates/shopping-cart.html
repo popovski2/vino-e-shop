@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Wines</title>
+
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+
+<body>
+
+<!-- USING THE HEADER FRAGMENT FROM FRAGMENTS/HEADER-->
+<div th:replace="fragments/header :: header"></div>
+
+
+
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h3 class="jumbotron-heading"><i>Shopping cart for
+                <th:block th:if="${#request.getRemoteUser() != null}" th:text="${#request.getRemoteUser()}"></th:block>
+            </i></h3>
+        </div>
+    </section>
+
+
+    <div class="container" th:if="${wines.size() == 0}">
+        <div style="justify-content: center; padding-left: 200px;">
+            <img style="display: flex" width="700px" height="500px" src="https://sethisbakery.com/assets/website/images/empty-cart.png">
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-right" th:if="${wines.size() > 0}">
+                <form th:action="@{'/shopping-cart/emptyCart'}" th:method="DELETE">
+                    <button type="submit" onclick="return confirm('Are you sure you want to empty your cart?')" class="btn btn-sm btn-outline-danger">Clear cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${hasError}">
+        <h5 class="text-center text-danger" th:text="${error}"></h5>
+    </div>
+
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12" th:if="${wines.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Wine</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="items" th:each="wine : ${wines}" class="cart-item">
+                            <td>
+                                <div class="product-item">
+                                    <a class="product-thumb" href="#"><img  width="80px" height="160px" th:src="${wine.getImageUrl()}" alt="Product"></a>
+                                    <div class="product-info">
+                                        <br>
+                                        <h4 class="product-title" th:text="${wine.getName()}"></h4>
+                                        <span><em th:text="${wine.getManufacturer() != null} ? 'Manufacturer: ' + ${wine.getManufacturer().getName()} : 'No Manufacturer'"></em></span>
+                                        <br>
+                                        <span><em th:text="${wine.getCategory() != null} ? 'Category: ' + ${wine.getCategory().getName()} : 'No Category'"></em></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td th:with="sum=${wine.getPrice() * wine.getQuantity()}" th:text="${wine.getPrice() * wine.getQuantity()} + ' $'"></td>
+                            <td th:text="${wine.getQuantity()}"></td>
+                            <td class="text-right">
+                                <form th:action="@{'/shopping-cart/decreaseQuantity/{id}' (id=${wine.getId()})}" th:method="POST">
+                                    <button type="submit" class="btn btn-light btn-circle btn-sm">-</button>
+                                </form>
+                            </td>
+                            <td class="text-right">
+                                <form th:action="@{'/shopping-cart/increaseQuantity/{id}' (id=${wine.getId()})}" th:method="POST">
+                                    <button type="submit" class="btn btn-light btn-circle btn-sm">+</button>
+                                </form>
+                            </td>
+                            <td class="text-right">
+                                <form th:action="@{'/shopping-cart/delete/{id}' (id=${wine.getId()})}" th:method="DELETE">
+                                    <button type="submit" onclick="return confirm('Are you sure you want to remove this item?')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <div class="text-right">
+                        <h4>
+                            <strong th:text="'Total price: ' + ${totalPrice} + ' $'">
+                            </strong>
+                        </h4>
+                    </div>
+                    <hr>
+                    <br>
+                    <div style="width: 300px; float: right" class="align-content-end">
+                        <p style="float: right"><i>Choose the delivery date: </i></p>
+                        <input type="date" class="form-control" id="date" name="date" placeholder="Choose delivery date">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<br>
+<br>
+
+
+
+<!-- USING THE FOOTER FRAGMENT FROM FRAGMENTS/FOOTER-->
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>
