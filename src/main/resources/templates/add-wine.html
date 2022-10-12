@@ -23,6 +23,121 @@
 <div th:replace="fragments/header :: header"></div>
 
 
+<section class="pt-5 pb-5 mt-0 align-items-center d-flex jumbotron">
+    <div class="container" style="background-image: url('https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F9%2F2021%2F01%2F12%2Fmore-wine-tariffs-imposed-on-france-and-germany-FT-BLOG0121.jpg'); opacity: 0.9; background-size: cover; height: 40vh;">
+        <div class="justify-content-center align-items-center d-flex text-center h-100">
+            <div class="col-12 col-md-8  h-50 ">
+                <div>
+                    <h1 th:if="${wine} != null" class="display-2  text-light mb-2 mt-5 jumbotron-heading">Edit wine</h1>
+                    <h1 th:if="${wine} == null" class="display-2  text-light mb-2 mt-5 jumbotron-heading">Add wine</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <form action="/wines/add" method="POST">
+                <input id="id" type="hidden" name="id" th:value="(${wine} != null ? ${wine.getId()} : '')">
+                <div class="form-group">
+                    <label for="name">Wine name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="name"
+                           name="name"
+                           th:value="(${wine} != null ? ${wine.getName()} : '')"
+                           required
+                           placeholder="Enter wine name">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="text"
+                           class="form-control"
+                           id="price"
+                           name="price"
+                           th:value="(${wine} != null ? ${wine.getPrice()} : '')"
+                           placeholder="Price">
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="text"
+                           class="form-control"
+                           id="quantity"
+                           name="quantity"
+                           th:value="(${wine} != null ? ${wine.getQuantity()} : '')"
+                           placeholder="Quantity">
+                </div>
+                <div class="form-group">
+                    <label for="imageUrl">Url</label>
+                    <input type="text"
+                           class="form-control"
+                           id="imageUrl"
+                           name="imageUrl"
+                           th:value="(${wine} != null ? ${wine.getImageUrl()} : '')"
+                           placeholder="Image Url">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="categoryId" id="categoryId" class="form-control">
+                        <option th:if="${wine} != null"
+                                th:selected="${wine.getCategory() != null && wine.getCategory().getId() == cat.getId()}"
+                                th:each="cat : ${categories}"
+                                th:value="${cat.getId()}"
+                                th:text="${cat.getName()}">
+                        </option>
+                        <option th:if="${wine} == null"
+                                th:each="cat : ${categories}"
+                                th:value="${cat.getId()}"
+                                th:text="${cat.getName()}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Variety</label>
+                    <select name="typeId" id="typeId" class="form-control">
+                        <option th:if="${wine} != null"
+                                th:selected="${wine.getType() != null && wine.getType().getId() == typ.getId()}"
+                                th:each="typ : ${types}"
+                                th:value="${typ.getId()}"
+                                th:text="${typ.getName()}">
+                        </option>
+                        <option th:if="${wine} == null"
+                                th:each="typ : ${types}"
+                                th:value="${typ.getId()}"
+                                th:text="${typ.getName()}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Manufacturer</label>
+                    <select name="manufacturerId" id="manufacturerId" class="form-control">
+                        <option th:if="${wine} != null"
+                                th:selected="${wine.getManufacturer() != null && wine.getManufacturer().getId() == man.getId()}"
+                                th:each="man : ${manufacturers}"
+                                th:value="${man.getId()}"
+                                th:text="${man.getName()}">
+                        </option>
+                        <option th:if="${wine} == null"
+                                th:each="man : ${manufacturers}"
+                                th:value="${man.getId()}"
+                                th:text="${man.getName()}">
+                        </option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a type="button" class="btn btn-primary" href="/wines">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
 
 
 
@@ -30,5 +145,25 @@
 <!-- USING THE FOOTER FRAGMENT FROM FRAGMENTS/FOOTER-->
 <div th:replace="fragments/footer :: footer"></div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#categoryId').change(function () {
+            var categoryId = $(this).val();
+            //alert(categoryId);
+            $.ajax({
+                type: 'GET',
+                url: '/wines/loadTypesByCategory/' + categoryId,
+                success: function (result) {
+                    var result = JSON.parse(result);
+                    var s = '';
+                    for(var i = 0; i < result.length; i++) {
+                        s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+                    }
+                    $('#typeId').html(s);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

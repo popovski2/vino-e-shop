@@ -81,7 +81,8 @@
                                     </div>
                                 </div>
                             </td>
-                            <td th:with="sum=${wine.getPrice() * wine.getQuantity()}" th:text="${wine.getPrice() * wine.getQuantity()} + ' $'"></td>
+                            <td th:with="sum=${wine.getPrice() * wine.getQuantity()}" th:text="${#numbers.formatDecimal(wine.getPrice() * wine.getQuantity(), 0, 'COMMA', 2, 'POINT')}
+ + ' $'"></td>
                             <td th:text="${wine.getQuantity()}"></td>
                             <td class="text-right">
                                 <form th:action="@{'/shopping-cart/decreaseQuantity/{id}' (id=${wine.getId()})}" th:method="POST">
@@ -104,7 +105,7 @@
                     <hr>
                     <div class="text-right">
                         <h4>
-                            <strong th:text="'Total price: ' + ${totalPrice} + ' $'">
+                            <strong th:text="'Total price: ' + ${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 2, 'POINT')} + ' $'">
                             </strong>
                         </h4>
                     </div>
