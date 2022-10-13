@@ -81,8 +81,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td th:with="sum=${wine.getPrice() * wine.getQuantity()}" th:text="${#numbers.formatDecimal(wine.getPrice() * wine.getQuantity(), 0, 'COMMA', 2, 'POINT')}
- + ' $'"></td>
+                            <td th:with="sum=${wine.getPrice() * wine.getQuantity()}" th:text="${#numbers.formatDecimal(wine.getPrice() * wine.getQuantity(), 0, 'COMMA', 2, 'POINT')} + ' $'"></td>
                             <td th:text="${wine.getQuantity()}"></td>
                             <td class="text-right">
                                 <form th:action="@{'/shopping-cart/decreaseQuantity/{id}' (id=${wine.getId()})}" th:method="POST">
@@ -111,6 +110,18 @@
                     </div>
                     <hr>
                     <br>
+                    <!-- BUY BUTTON -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 text-right" th:if="${wines.size() > 0}">
+                                <form th:action="@{'/shopping-cart/buy'}" th:method="POST">
+                                    <button type="submit" onclick="return confirm('Are you sure you want to buy these wines?')" class="btn btn-sm btn-outline-danger">Buy now</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div style="width: 300px; float: right" class="align-content-end">
                         <p style="float: right"><i>Choose the delivery date: </i></p>
                         <input type="date" class="form-control" id="date" name="date" placeholder="Choose delivery date">

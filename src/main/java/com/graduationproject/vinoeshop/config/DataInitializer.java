@@ -87,6 +87,7 @@ public class DataInitializer {
         userService.saveUser(new User("trajko@gmail.com","1234","trajko","trajkovski",Role.ROLE_ADMIN));
         userService.saveUser(new User("angela.madjar","1234","angela","madjar",Role.ROLE_CUSTOMER));
         userService.saveUser(new User("manufacturer@m.com","1234","angela","1234",Role.ROLE_MANUFACTURER));
+        userService.saveUser(new User("ppopovski53@gmail.com","1234","angela","1234",Role.ROLE_ADMIN));
 
 
 

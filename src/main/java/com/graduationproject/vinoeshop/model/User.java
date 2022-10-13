@@ -30,6 +30,8 @@ public class User implements Serializable, UserDetails {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    //@OneToMany(mappedBy = "user")
+    //private List<Order> orders;
 
     private boolean isAccountNonExpired = true;
     private boolean isAccountNonLocked = true;

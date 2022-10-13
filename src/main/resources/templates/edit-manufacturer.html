@@ -100,7 +100,7 @@
                     <div class="product_details">
                         <h5 th:text="${wine.getName()}"></h5>
                         <ul class="product_price list-unstyled">
-                            <li class="old_price" th:text="${wine.getPrice()} + ' $'"></li>
+                            <li class="old_price" th:text="${#numbers.formatDecimal(wine.getPrice(), 0, 'COMMA', 2, 'POINT')} + ' $'"></li>
                             <li class="old_price" th:text="'Manufacturer: ' + ${wine.getManufacturer().getName()}"></li>
                             <li class="old_price" th:text="'Category: ' + ${wine.getCategory().getName()}"></li>
                         </ul>

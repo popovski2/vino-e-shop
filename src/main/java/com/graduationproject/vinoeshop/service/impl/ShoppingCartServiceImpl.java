@@ -89,6 +89,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         shoppingCart.getWines().add(wine);
         wine.setQuantity(1);
+        Double newPrice = this.computeTotalPrice(shoppingCart.getId());
+        shoppingCart.setTotalPrice(newPrice);
         return this.shoppingCartRepository.save(shoppingCart);
     }
 
@@ -96,6 +98,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void emptyShoppingCart(String username) {
         ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
         shoppingCart.getWines().clear();
+        Double newPrice = this.computeTotalPrice(shoppingCart.getId());
+        shoppingCart.setTotalPrice(newPrice);
         this.shoppingCartRepository.save(shoppingCart);
     }
 
@@ -104,6 +108,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
         Wine wine = this.wineService.findById(wineId).orElseThrow(() -> new InvalidWineIdException(wineId));
         wine.setQuantity(wine.getQuantity()+1);
+        Double newPrice = this.computeTotalPrice(shoppingCart.getId());
+        shoppingCart.setTotalPrice(newPrice);
         this.shoppingCartRepository.save(shoppingCart);
     }
 
@@ -116,6 +122,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if(wine.getQuantity() == 0)
             shoppingCart.getWines().remove(wine);
 
+        Double newPrice = this.computeTotalPrice(shoppingCart.getId());
+        shoppingCart.setTotalPrice(newPrice);
         this.shoppingCartRepository.save(shoppingCart);
     }
 
@@ -133,4 +141,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.getWines().remove(wine);
         this.shoppingCartRepository.save(shoppingCart);
     }
+
+
+
 }
