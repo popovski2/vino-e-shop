@@ -42,7 +42,7 @@
                     </th:block>
                 </li>
                 <li class="nav-item m-auto">
-                    <th:block sec:authorize="hasAnyRole('ADMIN','MANUFACTURER')">
+                    <th:block sec:authorize="hasAnyRole('ADMIN')">
                         <a class="nav-link active" href="/types">Varieties</a>
                     </th:block>
                 </li>
@@ -51,11 +51,19 @@
                         <a class="nav-link active" href="/manufacturers">Manufacturers</a>
                     </th:block>
                 </li>
+
+                <li class="nav-item m-auto">
+                    <th:block sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link active" href="/users">Users</a>
+                    </th:block>
+                </li>
+
                 <li class="nav-item m-auto">
                     <th:block sec:authorize="hasRole('ADMIN')">
                         <a class="nav-link active" href="/orders/admin">Orders</a>
                     </th:block>
                 </li>
+
                 <li class="nav-item m-auto">
                     <th:block sec:authorize="hasRole('CUSTOMER')">
                         <a class="nav-link active" href="/orders/customer">My Orders</a>
@@ -63,21 +71,7 @@
                 </li>
             </ul>
 
-            <form class="form-inline my-2 my-lg-0">
-                <!--<div class="input-group input-group-sm">
-                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                           placeholder="Search...">
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-secondary btn-number">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>-->
-                <form class="form-inline my-2 my-lg-0">
-                    <th:block sec:authorize="hasAnyRole('CUSTOMER','MANUFACTURER')">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-                    </th:block>
-                </form>
+
                 </div>
                 <th:block sec:authorize="hasAnyRole('CUSTOMER')">
                     <a class="btn btn-success btn-sm ml-3" href="/shopping-cart">
@@ -96,11 +90,15 @@
             <a class="text-light" style="padding-left: 2%; font-size: small;" th:if="${#request.getRemoteUser() != null}" th:text="'Hello, ' + ${#request.getUserPrincipal().name}" href="#"></a>
 
         </div>
+        </nav>
     </div>
 </nav>
 </div>
 
 
+<script>
+
+</script>
 </body>
 
 </html>

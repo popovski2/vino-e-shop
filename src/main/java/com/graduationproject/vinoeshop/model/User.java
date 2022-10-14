@@ -28,6 +28,8 @@ public class User implements Serializable, UserDetails {
 
     private String password;
 
+    private String address;
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
@@ -45,7 +47,19 @@ public class User implements Serializable, UserDetails {
     @OneToMany
     private List<Order> orders;
 
+
+
     /** CONSTRUCTORS **/
+
+    public User(String email, String name, String surname, String password, Role role, String address) {
+        this.name = name;
+        this.surname = surname;
+        this.username = email;
+        this.password = password;
+        this.role = role;
+        this.address=address;
+        this.orders = new ArrayList<>();
+    }
 
     public User(String email, String name, String surname, String password, Role role) {
         this.name = name;
@@ -94,6 +108,10 @@ public class User implements Serializable, UserDetails {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     @Override
@@ -178,5 +196,9 @@ public class User implements Serializable, UserDetails {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

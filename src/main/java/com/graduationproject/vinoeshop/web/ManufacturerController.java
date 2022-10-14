@@ -1,7 +1,9 @@
 package com.graduationproject.vinoeshop.web;
 
+import com.graduationproject.vinoeshop.model.Category;
 import com.graduationproject.vinoeshop.model.Manufacturer;
 import com.graduationproject.vinoeshop.model.Wine;
+import com.graduationproject.vinoeshop.service.CategoryService;
 import com.graduationproject.vinoeshop.service.ManufacturerService;
 import com.graduationproject.vinoeshop.service.WineService;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,12 @@ public class ManufacturerController {
 
     private final ManufacturerService manufacturerService;
     private final WineService wineService;
+    private final CategoryService categoryService;
 
-    public ManufacturerController(ManufacturerService manufacturerService, WineService wineService) {
+    public ManufacturerController(ManufacturerService manufacturerService, WineService wineService, CategoryService categoryService) {
         this.manufacturerService = manufacturerService;
         this.wineService = wineService;
+        this.categoryService = categoryService;
     }
 
     /**
@@ -38,6 +42,9 @@ public class ManufacturerController {
         model.addAttribute("manufacturers",manufacturers);
         return "manufacturers";
     }
+
+
+
 
     /** GET THE PAGE FOR ADDING THE MANUFACTURER**/
     @GetMapping("/add-form")

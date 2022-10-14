@@ -19,6 +19,7 @@ public interface UserService extends UserDetailsService {
 
     User getUser(String username);
 
+    List<User> getAllUsers();
 
     User login(String username, String password);
 
@@ -36,15 +37,22 @@ public interface UserService extends UserDetailsService {
 
     User updateUsersOrders(Long userId , Long orderId);
 
-    List<User> getUsers();
 
-
-    User register(String email, String password, String name, String surname);
+    User register(String email, String password, String name, String surname,String address);
 
 
     User registerAsManufacturer(String email, String password, String name, String surname);
 
+    User registerAsAdministrator(String email, String password, String name, String surname);
 
+    /**
+     *                          *
+     *                          *
+     *      DELETE FUNCTIONS    *
+     *                          *
+     *                          *
+     **/
+    User delete(Long userId);
 
 
 }

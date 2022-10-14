@@ -44,11 +44,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return this.userRepository.findByUsername(username);
     }
 
-
     @Override
-    public List<User> getUsers() {
-        return  userRepository.findAll();
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
     }
+
+
 
     @Override
     public User login(String username, String password) {
@@ -88,15 +89,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     @Override
-    public User register(String email, String password, String name, String surname) {
+    public User register(String email, String password, String name, String surname, String address) {
         if (email==null || email.isEmpty()  || password==null || password.isEmpty()) {
             throw new InvalidUserArgumentsException();
         }
 
-        // KAKO TRET ARGUMENT PRAKJAME CUSTOMER ZA DA NE MOZE DA SE KREIRA NOV ADMIN
         String encryptedPassword = this.passwordEncoder.encode(password);
 
-        User user = new User(email, name, surname, encryptedPassword, Role.ROLE_CUSTOMER);
+        User user = new User(email, name, surname, encryptedPassword, Role.ROLE_CUSTOMER,  address);
         return userRepository.save(user);
     }
 
@@ -108,6 +108,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String encryptedPassword = this.passwordEncoder.encode(password);
         User user = new User(email, name, surname, encryptedPassword, Role.ROLE_MANUFACTURER);
         return userRepository.save(user);
+    }
+
+    @Override
+    public User registerAsAdministrator(String email, String password, String name, String surname) {
+        if (email==null || email.isEmpty()  || password==null || password.isEmpty()) {
+            throw new InvalidUserArgumentsException();
+        }
+        String encryptedPassword = this.passwordEncoder.encode(password);
+        User user = new User(email, name, surname, encryptedPassword, Role.ROLE_ADMIN);
+        return userRepository.save(user);
+    }
+
+    /**
+     *                          *
+     *                          *
+     *      DELETE FUNCTIONS    *
+     *                          *
+     *                          *
+     **/
+    @Override
+    public User delete(Long userId) {
+        User userForDeletion = this.userRepository.findById(userId).orElseThrow(() -> new InvalidUserIdException(userId));
+        this.userRepository.delete(userForDeletion);
+        return userForDeletion;
     }
 
 

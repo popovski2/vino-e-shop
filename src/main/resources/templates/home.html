@@ -62,69 +62,60 @@
         <h1>Best of Wines</h1>
         <p class="w-lg-50 mx-auto"><i>Our dedicated and experienced wine professionals have in-depth knowledge <br> of the wine industry and global market, with a clear focus on fine and rare wines.</i></p>
     </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- LISTING ALL WINES -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <div class="container">
-        <h2 class="h5 mb-5 text-center">Offers of the week</h2>
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="card text-center mb-3">
-                    <div class="py-5 px-4">
-                        <img height="200px" width="100px" src="https://data.callmewine.com/imgprodotto/prosecco-extra-dry-dirupo-andreola_17356_list.jpg" alt="" class="img-fluid mb-4" />
-                        <h3 class="fs-6 text-truncate"><a href="/wines" class="stretched-link text-reset">Los Posadas 2016</a></h3>
-                        <span class="text-success">$799.00</span> <del class="text-muted">$650.83</del>
-                    </div>
-                    <div class="bg-danger text-white small position-absolute end-0 top-0 px-2 py-2 lh-1 text-center">
-                        <span class="d-block">10%</span>
-                        <span class="d-block">OFF</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card text-center position-relative mb-3">
-                    <div class="py-5 px-4">
-                        <img height="200px" width="100px" src="https://data.callmewine.com/imgprodotto/lambrusco-rimosso-cantina-della-volta-2020_35161_list.jpg" alt="" class="img-fluid mb-4" />
-                        <h3 class="fs-6 text-truncate"><a href="/wines" class="stretched-link text-reset">Grenache Profuga 2018 (Magnum)</a></h3>
-                        <span class="text-success">$250.00</span> <del class="text-muted">$250</del>
-                    </div>
-                    <div class="bg-danger text-white small position-absolute end-0 top-0 px-2 py-2 lh-1 text-center">
-                        <span class="d-block">25%</span>
-                        <span class="d-block">OFF</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card text-center mb-3">
-                    <div class="py-5 px-4">
-                        <img height="200px" width="100px"  src="https://data.callmewine.com/imgprodotto/grillo-mandrarossa-2021_41119_list.jpg" alt="" class="img-fluid mb-4" />
-                        <h3 class="fs-6 text-truncate"><a href="/wines" class="stretched-link text-reset">Anjou Les Rouères 2018</a></h3>
-                        <span class="text-success">$29.00</span> <del class="text-muted">$14.50</del>
-                    </div>
-                    <div class="bg-danger text-white small position-absolute end-0 top-0 px-2 py-2 lh-1 text-center">
-                        <span class="d-block">50%</span>
-                        <span class="d-block">OFF</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card text-center mb-3">
-                    <div class="py-5 px-4">
-                        <img height="200px" width="100px" src="https://data.callmewine.com/imgprodotto/falo-d-ottobre-i-carpini-2018_41591_list.jpg" alt="" class="img-fluid mb-4" />
-                        <h3 class="fs-6 text-truncate"><a href="/wines" class="stretched-link text-reset">Les Poyeux Saumur Champigny 2015</a></h3>
-                        <span class="text-success">$110.00</span> <del class="text-muted">$85.23</del>
-                    </div>
+        <div class="row clearfix" th:if="${wines.size() > 0}" th:fragment="list">
+            <div th:each="wine : ${wines}" class="col-md-6 col-xl-3 portfolio-item" th:classappend="${wine.getCategory().getName()}">
+                <div class="card product_item m-b-30" >
+                    <div class="card-body row">
+                        <div class="cp_img col-6">
+                            <img th:src="${wine.getImageUrl()}" alt="Product" class="img-fluid">
+
+
+                                <th:block sec:authorize="hasAnyRole('CUSTOMER')">
+                                    <form style="display: inline-block; padding-right: 10%;" th:action="@{'/shopping-cart/add-wine/{id}' (id=${wine.getId()})}" th:method="POST">
+                                        <button type="submit" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-shopping-cart"></i></button>
+                                    </form>
+                                </th:block>
+
+                            </div>
+
+                        </div>
+                        <div class="product_details">
+                            <h5 th:text="${wine.getName()}" style="padding-left: 5%"></h5>
+                            <ul class="product_price list-unstyled" style="padding-left: 5%; padding-bottom: 5%;">
+                                <li class="old_price" th:text="${#numbers.formatDecimal(wine.getPrice(), 0, 'COMMA', 2, 'POINT')} + ' $'"></li>
+                                <li class="old_price" th:text="'Manufacturer: ' + ${wine.getManufacturer().getName()}"></li>
+                            </ul>
+                        </div>
                     <div class="bg-danger text-white small position-absolute end-0 top-0 px-2 py-2 lh-1 text-center">
                         <span class="d-block">25%</span>
                         <span class="d-block">OFF</span>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
-
-
     </div>
+
+
+
+
+
+
+
+
 </div>
 <br>
 <br>

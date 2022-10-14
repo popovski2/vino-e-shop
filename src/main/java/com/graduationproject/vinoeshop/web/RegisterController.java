@@ -59,9 +59,10 @@ public class RegisterController {
                            @RequestParam String username,
                            @RequestParam String password,
                            @RequestParam String name,
-                           @RequestParam String surname){
+                           @RequestParam String surname,
+                           @RequestParam String address){
         try {
-            this.userService.register(username,password,name,surname);
+            this.userService.register(username,password,name,surname,address);
             // auto login after registration
 
             // TUKA MORA DA SE NAPRAVI REGISTER, NE MOZE PREKU USER SERVICE PA POSLE VO SESIJA DA GO CUVAME!!!

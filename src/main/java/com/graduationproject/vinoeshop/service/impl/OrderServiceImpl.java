@@ -60,6 +60,8 @@ public class OrderServiceImpl implements OrderService {
         emailDto.setBuyerName(shoppingCart.getUser().getName());
         emailDto.setWines(shoppingCart.getWines());
         emailDto.setPrice(shoppingCart.getTotalPrice());
+        emailDto.setAddress(shoppingCart.getUser().getAddress());
+
         // Try block to check for exceptions
         try {
 
@@ -102,6 +104,7 @@ public class OrderServiceImpl implements OrderService {
         emailDto.setBuyerName(shoppingCart.getUser().getName());
         emailDto.setWines(shoppingCart.getWines());
         emailDto.setPrice(shoppingCart.getTotalPrice());
+        emailDto.setAddress(shoppingCart.getUser().getAddress());
 
         // Try block to check for exceptions
         try {
@@ -165,7 +168,10 @@ public class OrderServiceImpl implements OrderService {
         String stringBuilder = "You have ordered: "
                 + "\nProducts: " + wineNames
                 + "\nDate: " + emailDto.getDate()
-                + "\nPrice: " + df.format(emailDto.getPrice()) + "$";
+                + "\nWill be delivered to: " + emailDto.getAddress()
+                + "\nPrice: " + df.format(emailDto.getPrice()) + "$"
+                + "\n"
+                + "\nThank you for choosing us! :)";
 
         return stringBuilder;
     }
@@ -174,9 +180,15 @@ public class OrderServiceImpl implements OrderService {
         List<String> wineNames = emailDto.getWines().stream().map(Wine::getName).collect(Collectors.toList());
         wineNames.stream().forEach(w->w.toString());
 
-        String stringBuilder = "Customer: " + emailDto.getBuyerName() + "\nEmail: " + emailDto.getBuyerEmail()
-                + "\nProducts: " + wineNames
+        List<Long> wineIds = emailDto.getWines().stream().map(Wine::getId).collect(Collectors.toList());
+        wineNames.stream().forEach(w->w.toString());
+
+        String stringBuilder = "Customer: " + emailDto.getBuyerName()
+                + "\nEmail: " + emailDto.getBuyerEmail()
+                + "\nWine: " + wineNames
+                + "\nWine IDs: " + wineIds
                 + "\nDate: " + emailDto.getDate()
+                +" \nOn address: " + emailDto.getAddress()
                 + "\nPrice: " + df.format(emailDto.getPrice()) + "$";
 
         return stringBuilder;
