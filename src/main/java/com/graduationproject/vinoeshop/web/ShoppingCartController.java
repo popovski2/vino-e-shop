@@ -1,10 +1,12 @@
 package com.graduationproject.vinoeshop.web;
 
+import com.graduationproject.vinoeshop.model.ChargeRequest;
 import com.graduationproject.vinoeshop.model.ShoppingCart;
 import com.graduationproject.vinoeshop.model.User;
 import com.graduationproject.vinoeshop.model.Wine;
 import com.graduationproject.vinoeshop.service.OrderService;
 import com.graduationproject.vinoeshop.service.ShoppingCartService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,11 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/shopping-cart")
 public class ShoppingCartController {
+
+    @Value("${STRIPE_PUBLIC_KEY}")
+    private String stripePublicKey;
+
+
     private final ShoppingCartService shoppingCartService;
     private final OrderService orderService;
 
@@ -47,6 +54,11 @@ public class ShoppingCartController {
         model.addAttribute("bodyContent","shopping-cart");
         model.addAttribute("totalPrice",this.shoppingCartService.computeTotalPrice(shoppingCart.getId()));
 
+
+        /** for stripe payment **/
+        model.addAttribute("stripePublicKey", stripePublicKey);
+        model.addAttribute("currency", ChargeRequest.Currency.USD);
+
         return "shopping-cart";
     }
 
@@ -57,25 +69,6 @@ public class ShoppingCartController {
      *                      *
      *                      **/
 
-    @PostMapping("/buy")
-    public String buy(Authentication authentication){
-        try{
-            User user = (User) authentication.getPrincipal();
-            ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(user.getUsername());
-
-            //sega ovde napravi eden Order (user,shoppingcart
-            //this.orderService.create(user.getId(),shoppingCart.getWines().stream().map(Wine::getId).collect(Collectors.toList()),shoppingCart.getTotalPrice(),shoppingCart.getDateCreated());
-            this.orderService.create(shoppingCart.getId());
-            this.orderService.sendMailToAdmin(shoppingCart);
-
-            this.shoppingCartService.emptyShoppingCart(user.getUsername());
-         //   this.stripeService.checkout(order);
-            return "redirect:/shopping-cart";
-
-        } catch (RuntimeException exception){
-            return "redirect:/shopping-cart?error="+exception.getMessage();
-        }
-    }
 
 
     @PostMapping("/add-wine/{id}")

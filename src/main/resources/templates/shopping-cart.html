@@ -114,18 +114,37 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12 text-right" th:if="${wines.size() > 0}">
-                                <form th:action="@{'/shopping-cart/buy'}" th:method="POST">
-                                    <button type="submit" onclick="return confirm('Are you sure you want to buy these wines?')" class="btn btn-sm btn-outline-danger">Buy now</button>
+
+
+                                <form action='/charge' method='POST' id='checkout-form'>
+                                    <input type='hidden' th:value='${totalPrice.intValue()}' name='amount' />
+                                    <!-- NOTE: data-key/data-amount/data-currency will be rendered by Thymeleaf -->
+                                    <script
+                                            src='https://checkout.stripe.com/checkout.js'
+                                            class='stripe-button'
+                                            th:attr='data-key=${stripePublicKey},
+                                            data-amount=${totalPrice*100},
+                                            data-currency=${currency}'
+                                            data-name='Vino Store'
+                                            data-description='Stripe checkout'
+                                            data-image
+                                                    ='https://static.vecteezy.com/system/resources/previews/000/638/173/original/wine-splash-vector-illustration.jpg'
+                                            data-locale='auto'
+                                            data-zip-code='false'>
+                                    </script>
                                 </form>
+
+
+                             <!--   <form th:action="@{'/checkout'}" th:method="GET">
+                                    <button type="submit" onclick="return confirm('Are you sure you want to buy these wines?')" class="btn btn-sm btn-outline-danger">Buy now</button>
+                                </form>-->
                             </div>
                         </div>
                     </div>
 
 
-                    <div style="width: 300px; float: right" class="align-content-end">
-                        <p style="float: right"><i>Choose the delivery date: </i></p>
-                        <input type="date" class="form-control" id="date" name="date" placeholder="Choose delivery date">
-                    </div>
+
+
                 </div>
             </div>
         </div>

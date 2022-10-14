@@ -14,6 +14,8 @@ public interface OrderService {
 
     void sendMailToAdmin(ShoppingCart shoppingCart);
 
+    void sendMailToCustomer(ShoppingCart shoppingCart);
+
    // Order create(Long userId, List<Long> winesId, Double totalPrice, LocalDateTime date);
     Order create(Long shoppingCartId);
 
