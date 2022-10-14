@@ -1,5 +1,6 @@
 package com.graduationproject.vinoeshop.service;
 
+import com.graduationproject.vinoeshop.model.Order;
 import com.graduationproject.vinoeshop.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -18,6 +19,7 @@ public interface UserService extends UserDetailsService {
 
     User getUser(String username);
 
+
     User login(String username, String password);
 
 
@@ -31,6 +33,8 @@ public interface UserService extends UserDetailsService {
      **/
 
     User saveUser(User user);
+
+    User updateUsersOrders(Long userId , Long orderId);
 
     List<User> getUsers();
 

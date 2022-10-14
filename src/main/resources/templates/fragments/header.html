@@ -53,12 +53,12 @@
                 </li>
                 <li class="nav-item m-auto">
                     <th:block sec:authorize="hasRole('ADMIN')">
-                        <a class="nav-link active" href="/orders">Orders</a>
+                        <a class="nav-link active" href="/orders/admin">Orders</a>
                     </th:block>
                 </li>
                 <li class="nav-item m-auto">
                     <th:block sec:authorize="hasRole('CUSTOMER')">
-                        <a class="nav-link active" href="/orders">My Orders</a>
+                        <a class="nav-link active" href="/orders/customer">My Orders</a>
                     </th:block>
                 </li>
             </ul>
@@ -79,7 +79,7 @@
                     </th:block>
                 </form>
                 </div>
-                <th:block sec:authorize="hasAnyRole('CUSTOMER','MANUFACTURER')">
+                <th:block sec:authorize="hasAnyRole('CUSTOMER')">
                     <a class="btn btn-success btn-sm ml-3" href="/shopping-cart">
                         <i class="fa fa-shopping-cart"></i>  Cart
                     </a>

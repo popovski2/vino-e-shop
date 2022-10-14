@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Wines</title>
+
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+
+<!-- USING THE HEADER FRAGMENT FROM FRAGMENTS/HEADER-->
+<div th:replace="fragments/header :: header"></div>
+
+
+<section class="pt-5 pb-5 mt-0 align-items-center d-flex jumbotron">
+    <div class="container" style="background-image: url('https://www.tripsavvy.com/thmb/LNvcFjI3133neV0H_OXsdMGgq18=/2151x1394/filters:fill(auto,1)/vineyard-in-tuscany-5c298f19c9e77c0001f7e4fc.jpg'); opacity: 0.7; background-size: cover; height: 40vh;">
+        <div class="justify-content-center align-items-center d-flex text-center h-100">
+            <div class="col-12 col-md-8  h-50 ">
+                <div>
+                    <h1 class="display-2 mb-2 mt-5 jumbotron-heading text-light">All Orders</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<div class="container mb-4">
+    <div class="row">
+        <!--ako ima wines togas pokazi go ovoj div-->
+        <div class="col-12" th:if="${orders.size() > 0}">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Order username</th>
+                        <th scope="col">Price (USD)</th>
+                        <th scope="col">Date created</th>
+                        <th scope="col">Wines purchased</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.getShoppingCart().getUser().getUsername()}"></td>
+                        <td th:text="${#numbers.formatDecimal(order.getShoppingCart().getTotalPrice(), 0, 'COMMA', 2, 'POINT')} + '$' "></td>
+                        <td th:text="${order.getShoppingCart().getDateCreated()}"></td>
+                        <td th:text="${order.getShoppingCart().getWineNames()}"></td>
+
+
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<br>
+<br>
+
+
+
+
+
+
+<!-- USING THE FOOTER FRAGMENT FROM FRAGMENTS/FOOTER-->
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

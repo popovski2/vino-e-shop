@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class ShoppingCart {
@@ -29,9 +30,9 @@ public class ShoppingCart {
     @Enumerated(EnumType.STRING)
     private ShoppingCartStatus status;
 
-    //ne znam dali se koristit ova ili to gore dateCreated
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date date;
+    private Double priceBackup;
+
+
 
     /** CONSTRUCTORS **/
 
@@ -58,6 +59,14 @@ public class ShoppingCart {
 
 
     /** GETTERS **/
+
+    public List<String> getWineNames(){
+        List<String> wineNames = this.wines.stream().map(Wine::getName).collect(Collectors.toList());
+        wineNames.stream().forEach(w->w.toString());
+        return wineNames;
+    }
+
+
     public Long getId() {
         return id;
     }
@@ -82,9 +91,12 @@ public class ShoppingCart {
         return status;
     }
 
-    public Date getDate() {
-        return date;
+    public Double getPriceBackup() {
+        return priceBackup;
     }
+
+
+
     /** SETTERS **/
 
     public void setId(Long id) {
@@ -111,7 +123,7 @@ public class ShoppingCart {
         this.status = status;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setPriceBackup(Double priceBackup) {
+        this.priceBackup = priceBackup;
     }
 }

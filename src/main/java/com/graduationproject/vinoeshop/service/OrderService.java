@@ -20,4 +20,9 @@ public interface OrderService {
     Order create(Long shoppingCartId);
 
 
+    List<Order> getAllOrdersAdmin();
+
+    List<Order> getAllOrdersCustomer(User user);
+
+
 }

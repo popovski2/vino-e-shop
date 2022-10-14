@@ -36,7 +36,7 @@
 
     <div class="container" th:if="${wines.size() == 0}">
         <div style="justify-content: center; padding-left: 200px;">
-            <img style="display: flex" width="700px" height="500px" src="https://sethisbakery.com/assets/website/images/empty-cart.png">
+            <img style="display: flex" width="700px" height="500px" src="http://fortheloveofgeorge.com.au/wp-content/themes/mrtailor/images/empty_cart_retina.png">
         </div>
     </div>
 
@@ -117,7 +117,7 @@
 
 
                                 <form action='/charge' method='POST' id='checkout-form'>
-                                    <input type='hidden' th:value='${totalPrice.intValue()}' name='amount' />
+                                    <input type='hidden' th:value='${totalPrice.intValue()*100}' name='amount' />
                                     <!-- NOTE: data-key/data-amount/data-currency will be rendered by Thymeleaf -->
                                     <script
                                             src='https://checkout.stripe.com/checkout.js'

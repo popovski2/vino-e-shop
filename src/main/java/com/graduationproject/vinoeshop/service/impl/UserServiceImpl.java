@@ -1,8 +1,12 @@
 package com.graduationproject.vinoeshop.service.impl;
 
+import com.graduationproject.vinoeshop.model.Order;
 import com.graduationproject.vinoeshop.model.User;
 import com.graduationproject.vinoeshop.model.enumerations.Role;
+import com.graduationproject.vinoeshop.model.exceptions.InvalidOrderIdException;
 import com.graduationproject.vinoeshop.model.exceptions.InvalidUserArgumentsException;
+import com.graduationproject.vinoeshop.model.exceptions.InvalidUserIdException;
+import com.graduationproject.vinoeshop.repository.OrderRepository;
 import com.graduationproject.vinoeshop.repository.UserRepository;
 import com.graduationproject.vinoeshop.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,11 +21,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
     private final PasswordEncoder passwordEncoder;
 
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, OrderRepository orderRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -37,6 +43,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User getUser(String username) {
         return this.userRepository.findByUsername(username);
     }
+
 
     @Override
     public List<User> getUsers() {
@@ -71,6 +78,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.save(user);
     }
 
+    @Override
+    public User updateUsersOrders(Long userId, Long orderId) {
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new InvalidUserIdException(userId));
+        Order order = this.orderRepository.findById(orderId).orElseThrow(() -> new InvalidOrderIdException(orderId));
+        user.addOrder(order);
+        return this.userRepository.save(user);
+    }
 
 
     @Override

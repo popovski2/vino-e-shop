@@ -13,11 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/shopping-cart")
 public class ShoppingCartController {
+
 
     @Value("${STRIPE_PUBLIC_KEY}")
     private String stripePublicKey;
@@ -50,9 +52,12 @@ public class ShoppingCartController {
 
         String username = request.getRemoteUser();
         ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(username);
+
+
         model.addAttribute("wines",this.shoppingCartService.listAllWinesInShoppingCart(shoppingCart.getId()));
         model.addAttribute("bodyContent","shopping-cart");
         model.addAttribute("totalPrice",this.shoppingCartService.computeTotalPrice(shoppingCart.getId()));
+
 
 
         /** for stripe payment **/

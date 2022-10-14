@@ -96,12 +96,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void emptyShoppingCart(String username) {
+
         ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
+        shoppingCart.setStatus(ShoppingCartStatus.FINISHED);
+
+        ShoppingCart newCart = this.getActiveShoppingCart(username);
+        this.shoppingCartRepository.save(newCart);
+
+       /* ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
         shoppingCart.getWines().clear();
         Double newPrice = this.computeTotalPrice(shoppingCart.getId());
         shoppingCart.setTotalPrice(newPrice);
         this.shoppingCartRepository.save(shoppingCart);
-    }
+    */}
 
     @Override
     public void increaseQuantity(String username, Long wineId) {
@@ -124,6 +131,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         Double newPrice = this.computeTotalPrice(shoppingCart.getId());
         shoppingCart.setTotalPrice(newPrice);
+
         this.shoppingCartRepository.save(shoppingCart);
     }
 

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +42,9 @@ public class User implements Serializable, UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<ShoppingCart> carts;
 
+    @OneToMany
+    private List<Order> orders;
+
     /** CONSTRUCTORS **/
 
     public User(String email, String name, String surname, String password, Role role) {
@@ -49,12 +53,33 @@ public class User implements Serializable, UserDetails {
         this.username = email;
         this.password = password;
         this.role = role;
+        this.orders = new ArrayList<>();
     }
+
+    public User(String email, String name, String surname, String password, Role role, Order order) {
+        this.name = name;
+        this.surname = surname;
+        this.username = email;
+        this.password = password;
+        this.role = role;
+        this.orders.add(order);
+    }
+
+
 
     public User() {
     }
 
+    public List<ShoppingCart> getCarts() {
+        return carts;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
     /** GETTERS **/
+
     public Long getId() {
         return id;
     }
@@ -100,8 +125,21 @@ public class User implements Serializable, UserDetails {
         return isEnabled;
     }
 
+
+
     /** SETTERS **/
 
+    public void setCarts(List<ShoppingCart> carts) {
+        this.carts = carts;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void addOrder(Order order){
+        this.orders.add(order);
+    }
     public void setId(Long id) {
         this.id = id;
     }

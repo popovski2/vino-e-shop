@@ -143,8 +143,18 @@ public class OrderServiceImpl implements OrderService {
         ShoppingCart shoppingCart = this.shoppingCartRepository.findById(shoppingCartId).orElseThrow(() -> new InvalidShoppingCartIdException(shoppingCartId));
         Order order = new Order(shoppingCart);
         return this.orderRepository.save(order);
+
     }
 
+    @Override
+    public List<Order> getAllOrdersAdmin() {
+        return this.orderRepository.findAll();
+    }
+
+    @Override
+    public List<Order> getAllOrdersCustomer(User user) {
+        return this.orderRepository.findAllByShoppingCartUser(user);
+    }
 
 
     /** helper functions **/

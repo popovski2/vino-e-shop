@@ -1,10 +1,12 @@
 package com.graduationproject.vinoeshop.web;
 
 import com.graduationproject.vinoeshop.model.ChargeRequest;
+import com.graduationproject.vinoeshop.model.Order;
 import com.graduationproject.vinoeshop.model.ShoppingCart;
 import com.graduationproject.vinoeshop.model.User;
 import com.graduationproject.vinoeshop.service.OrderService;
 import com.graduationproject.vinoeshop.service.ShoppingCartService;
+import com.graduationproject.vinoeshop.service.UserService;
 import com.graduationproject.vinoeshop.service.impl.StripeService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
@@ -20,14 +22,16 @@ public class ChargeController {
 
     private final ShoppingCartService shoppingCartService;
     private final OrderService orderService;
+    private final UserService userService;
 
 
     @Autowired
     private StripeService paymentsService;
 
-    public ChargeController(ShoppingCartService shoppingCartService, OrderService orderService) {
+    public ChargeController(ShoppingCartService shoppingCartService, OrderService orderService, UserService userService) {
         this.shoppingCartService = shoppingCartService;
         this.orderService = orderService;
+        this.userService = userService;
     }
 
     @PostMapping("/charge")
@@ -54,19 +58,24 @@ public class ChargeController {
     @ExceptionHandler(StripeException.class)
     public String handleError(Model model, StripeException ex) {
         model.addAttribute("error", ex.getMessage());
+        System.out.println("======================================================================================== "+ex.getMessage());
         return "result";
     }
 
 
 
-    /** HELPER FUNCTION TO SEND MAIL **/
+    /** HELPER FUNCTION TO SEND MAIL AND CHANGE THE STATUS OF THE SHOPPING CART TO FINISHED
+     *
+     *  AND ALSO ADD THE ORDER TO USER'S PROPERTY LIST<ORDER> ORDERS
+     * **/
     public void sendMail(Model model, Authentication authentication){
 
             User user = (User) authentication.getPrincipal();
             ShoppingCart shoppingCart = this.shoppingCartService.getActiveShoppingCart(user.getUsername());
 
-            //sega ovde napravi eden Order (user,shoppingcart
-            this.orderService.create(shoppingCart.getId());
+            //now make the Order object(shoppingCartId)
+            Order order = this.orderService.create(shoppingCart.getId());
+            this.userService.updateUsersOrders(shoppingCart.getUser().getId(), order.getId());
             this.orderService.sendMailToAdmin(shoppingCart);
             this.orderService.sendMailToCustomer(shoppingCart);
             this.shoppingCartService.emptyShoppingCart(user.getUsername());
