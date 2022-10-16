@@ -14,9 +14,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
-
+<body>
 <!-- USING THE HEADER FRAGMENT FROM FRAGMENTS/HEADER-->
+<div style="margin-top: 20px;">
 <div th:replace="fragments/header :: header"></div>
+</div>
 
 <div class="container">
     <form class="form-signin mt-xl-5" method="post" action="/login">
@@ -42,9 +44,11 @@
     </form>
     <br/>
     <a href="/register" class="btn btn-block btn-outline-primary">Register as a User</a>
+
 <!--
     <a href="/registerManufacturer" class="btn btn-block btn-outline-primary">Register as a Manufacturer</a>
 -->
+
 </div>
 
 

@@ -41,7 +41,7 @@
             <!--==== Wines Filters ====-->
             <div class="categories">
 
-                <ul style="display: inline-block; padding-left: 10%;">
+                <ul style="display: inline-block; padding-left: 18%;">
 
                     <li class="active">
                         <a data-filter="*">All Categories</a>
@@ -97,7 +97,11 @@
                         <ul class="product_price list-unstyled">
                             <li class="old_price" th:text="${#numbers.formatDecimal(wine.getPrice(), 0, 'COMMA', 2, 'POINT')} + ' $'"></li>
                             <li class="old_price" th:text="'Manufacturer: ' + ${wine.getManufacturer().getName()}"></li>
+
+<!--
                             <li class="old_price" th:text="'Category: ' + ${wine.getCategory().getName()}"></li>
+-->
+
                         </ul>
                     </div>
                 </div>

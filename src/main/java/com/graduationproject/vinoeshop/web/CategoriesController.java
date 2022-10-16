@@ -39,10 +39,6 @@ public class CategoriesController {
         List<Category> categories = this.categoryService.listAllCategories();
         List<Type> types = this.typeService.listAllTypes();
 
-        //  this is only to show that 1 category can have multiple types
-        // for example: White wine has types: Chardonnay, Riesling, etc..
-        types.add(new Type("nov", "t", categories.get(1)));
-
         model.addAttribute("categories", categories);
         model.addAttribute("types", types);
         return "categories";
@@ -61,7 +57,18 @@ public class CategoriesController {
         return "add-category";
     }
 
-
+    @GetMapping("/edit-form/{id}")
+    public String editCategoryPage(@PathVariable Long id, Model model) {
+        if (this.categoryService.findById(id).isPresent()) {
+            Category category = this.categoryService.findById(id).get();
+            List<Type> types = this.typeService.findAllTypesWithCategoryId(category.getId());
+            model.addAttribute("category", category);
+            model.addAttribute("types", types);
+            model.addAttribute("bodyContent", "add-category");
+            return "add-category";
+        }
+        return "redirect:/wines?error=CategoryNotFound";
+    }
 
 
 

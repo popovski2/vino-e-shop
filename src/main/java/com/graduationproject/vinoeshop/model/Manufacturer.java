@@ -16,9 +16,6 @@ public class Manufacturer {
     private String address;
 
 
-
-
-
     /** CONSTRUCTORS **/
     public Manufacturer(String name, String address) {
         this.name = name;

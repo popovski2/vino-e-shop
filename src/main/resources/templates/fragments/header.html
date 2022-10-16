@@ -21,7 +21,9 @@
 <div th:fragment="header" style="margin-top: -20px;">
 <nav class="navbar navbar-expand-md navbar-dark bg-danger"  >
     <div class="container">
-        <a class="navbar-brand" href="/home"><i>Best of Wines</i></a>
+        <a class="navbar-brand" href="/home">
+            <i style="font-family: Brush Script MT, Brush Script Std, cursive; font-size: 1.3em; ">Vino</i>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -36,6 +38,7 @@
                 <li class="nav-item m-auto">
                     <a class="nav-link active" href="/wines">Wines</a>
                 </li>
+
                 <li class="nav-item m-auto">
                     <th:block sec:authorize="hasRole('ADMIN')">
                         <a class="nav-link active" href="/categories">Categories</a>

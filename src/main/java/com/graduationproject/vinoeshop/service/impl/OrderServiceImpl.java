@@ -106,7 +106,9 @@ public class OrderServiceImpl implements OrderService {
         emailDto.setPrice(shoppingCart.getTotalPrice());
         emailDto.setAddress(shoppingCart.getUser().getAddress());
 
-        // Try block to check for exceptions
+        List<Manufacturer> m = shoppingCart.getWines().stream().map(Wine::getManufacturer).collect(Collectors.toList());
+
+
         try {
 
             // Creating a simple mail message
