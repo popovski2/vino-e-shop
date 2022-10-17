@@ -35,7 +35,7 @@ public class DataInitializer {
 
      // This annotation is commented now because it was only needed for the testing phase and running the application for the
     // first time, in order to fill the database with some information
-    @PostConstruct
+   // @PostConstruct
     public void initData(){
 
 
