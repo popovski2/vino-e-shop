@@ -68,14 +68,14 @@ public class TypesController {
      *                      *
      *                      **/
     @PostMapping("add")
-    public String saveType(@RequestParam(required = false) Long typeId,
+    public String saveType(@RequestParam(required = false) Long id,
                            @RequestParam String name,
                            @RequestParam String description,
                            @RequestParam Long categoryId){
 
-        if(typeId!=null){
+        if(id!=null){
             // update
-            this.typeService.update(typeId,name,description,categoryId);
+            this.typeService.update(id,name,description,categoryId);
         }
         else{
             //save
