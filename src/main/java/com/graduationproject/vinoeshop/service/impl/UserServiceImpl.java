@@ -135,9 +135,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User userForDeletion = this.userRepository.findById(userId).orElseThrow(() -> new InvalidUserIdException(userId));
 
         //find his orders first and delete them
-        this.orderRepository.deleteAllByShoppingCartUser(userForDeletion);
+       // this.orderRepository.deleteAllByShoppingCartUser(userForDeletion);
         //find his shopping carts and  delete them too
-        this.shoppingCartRepository.deleteAllByUser(userForDeletion);
+       // this.shoppingCartRepository.deleteAllByUser(userForDeletion);
 
         this.userRepository.delete(userForDeletion);
         return userForDeletion;

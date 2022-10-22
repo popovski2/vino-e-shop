@@ -41,10 +41,10 @@ public class User implements Serializable, UserDetails {
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<ShoppingCart> carts;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Order> orders;
 
 
