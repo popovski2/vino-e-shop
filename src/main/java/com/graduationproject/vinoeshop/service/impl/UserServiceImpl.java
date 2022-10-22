@@ -7,6 +7,7 @@ import com.graduationproject.vinoeshop.model.exceptions.InvalidOrderIdException;
 import com.graduationproject.vinoeshop.model.exceptions.InvalidUserArgumentsException;
 import com.graduationproject.vinoeshop.model.exceptions.InvalidUserIdException;
 import com.graduationproject.vinoeshop.repository.OrderRepository;
+import com.graduationproject.vinoeshop.repository.ShoppingCartRepository;
 import com.graduationproject.vinoeshop.repository.UserRepository;
 import com.graduationproject.vinoeshop.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,12 +23,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
     private final PasswordEncoder passwordEncoder;
 
 
-    public UserServiceImpl(UserRepository userRepository, OrderRepository orderRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, OrderRepository orderRepository, ShoppingCartRepository shoppingCartRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -130,6 +133,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User delete(Long userId) {
         User userForDeletion = this.userRepository.findById(userId).orElseThrow(() -> new InvalidUserIdException(userId));
+
+        //find his orders first and delete them
+        this.orderRepository.deleteAllByShoppingCartUser(userForDeletion);
+        //find his shopping carts and  delete them too
+        this.shoppingCartRepository.deleteAllByUser(userForDeletion);
+
         this.userRepository.delete(userForDeletion);
         return userForDeletion;
     }

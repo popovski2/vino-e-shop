@@ -13,5 +13,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByShoppingCartUser(User user);
 
+    void deleteAllByShoppingCartUser(User user);
+
 
 }

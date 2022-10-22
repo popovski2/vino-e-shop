@@ -161,6 +161,11 @@ public class OrderServiceImpl implements OrderService {
         return this.orderRepository.findAllByShoppingCartUser(user);
     }
 
+    @Override
+    public void deleteAllOrdersOfUser(User user) {
+        this.orderRepository.deleteAllByShoppingCartUser(user);
+    }
+
 
     /** helper functions **/
     public String createEmailBody(EmailDto emailDto){

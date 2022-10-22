@@ -24,5 +24,8 @@ public interface OrderService {
 
     List<Order> getAllOrdersCustomer(User user);
 
+    //delete all orders from user
+    void deleteAllOrdersOfUser(User user);
+
 
 }

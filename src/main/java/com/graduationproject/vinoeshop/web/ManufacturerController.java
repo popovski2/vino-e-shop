@@ -78,7 +78,9 @@ public class ManufacturerController {
         if(id!=null){
             this.manufacturerService.update(id,name,address);
         }
-        this.manufacturerService.create(name,address);
+        else {
+            this.manufacturerService.create(name, address);
+        }
         return "redirect:/manufacturers";
 
     }
